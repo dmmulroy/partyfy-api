@@ -26,6 +26,7 @@ app.post('/partyfy', upload.single('image'), async (req, res) => {
       .status(200)
       .send(partyImage);
   } catch (err) {
+    console.error(err);
     res.status(500).send(err);
   }
 });
