@@ -4,7 +4,7 @@ const numCPUs = require('os').cpus().length;
 const server = require('./src/server');
 const pkg = require('./package.json');
 
-const workers = process.env.WEB_CONCURENNCY || 7;
+const workers = process.env.WEB_CONCURRENCY || 7;
 
 console.log(workers);
 
