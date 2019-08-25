@@ -1,28 +1,34 @@
-const cluster = require('cluster');
-const numCPUs = require('os').cpus().length;
+// {const cluster = require('cluster');
+// const numCPUs = require('os').cpus().length;
 
 const server = require('./src/server');
 const pkg = require('./package.json');
 
-const workers = process.env.WEB_CONCURRENCY || 7;
+// const workers = process.env.WEB_CONCURRENCY || 7;
 
-console.log(workers);
+// console.log(workers);
 
-if (cluster.isMaster) {
-  console.log(`${pkg.name} master (pid: ${process.pid}) started...`);
+// if (cluster.isMaster) {
+//   console.log(`${pkg.name} master (pid: ${process.pid}) started...`);
 
-  for (let idx = 0; idx < workers; idx++) {
-    cluster.fork();
-  }
+//   for (let idx = 0; idx < workers; idx++) {
+//     cluster.fork();
+//   }
 
-  cluster.on('exit', worker => {
-    console.log(`${pkg.name} worker (pid: ${worker.process.pid}) died`);
-    console.log('Forking a new process...');
+//   cluster.on('exit', worker => {
+//     console.log(`${pkg.name} worker (pid: ${worker.process.pid}) died`);
+//     console.log('Forking a new process...');
 
-    cluster.fork();
-  });
-} else {
-  server.listen(process.env.PORT || 4000, () =>
-    console.log(`${pkg.name} worker (pid: ${process.pid}) started...`)
-  );
-}
+//     cluster.fork();
+//   });
+// } else {
+//   server.listen(process.env.PORT || 4000, () =>
+//     console.log(`${pkg.name} worker (pid: ${process.pid}) started...`)
+//   );
+// }
+
+server.listen(
+  process.env.PORT || 4000,
+  () => console.log(`${pkg.name} running on port ${process.env.PORT}`)
+  // console.log(`${pkg.name} worker (pid: ${process.pid}) started...`)
+);
