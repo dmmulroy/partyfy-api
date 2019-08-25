@@ -6,6 +6,8 @@ const pkg = require('./package.json');
 
 const workers = process.env.WEB_CONCURENNCY || 7;
 
+console.log(workers);
+
 if (cluster.isMaster) {
   console.log(`${pkg.name} master (pid: ${process.pid}) started...`);
 
