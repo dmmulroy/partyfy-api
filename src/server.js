@@ -2,9 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const multer = require('multer');
 const partyfy = require('partyfy');
 
-const Busboy = require('busboy');
+const upload = multer({ storage: multer.memoryStorage() });
 
 const app = express();
 
@@ -16,40 +17,18 @@ app.use(
   )
 );
 
-app.post('/partyfy', (req, res) => {
-  const busboy = new Busboy({ headers: req.headers });
+app.post('/partyfy', upload.single('image'), async (req, res) => {
+  try {
+    const partyImage = await partyfy(req.file.buffer);
 
-  busboy.on('file', function(fieldName, file, fileName, encoding, mimetype) {
-    const chunks = [];
-
-    file.on('data', data => chunks.push(data));
-
-    file.on('end', async () => {
-      try {
-        const image = Buffer.concat(chunks);
-        const partyImage = await partyfy(image);
-        res
-          .status(200)
-          .contentType('gif')
-          .send(partyImage);
-      } catch (err) {
-        console.error(err);
-        res.status(500).send('something went wrong');
-      }
-    });
-  });
-
-  busboy.on('error', error => {
+    res
+      .contentType('gif')
+      .status(200)
+      .send(partyImage);
+  } catch (err) {
     console.error(err);
-    res.status(500).send('something went wrong');
-  });
-
-  busboy.on('finish', function() {
-    console.log('Done parsing form!');
-    res.end();
-  });
-
-  req.pipe(busboy);
+    res.status(500).send(err);
+  }
 });
 
 app.get('/ping', (req, res) => res.status(200).json('pong'));
