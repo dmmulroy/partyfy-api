@@ -44,6 +44,11 @@ app.post('/partyfy', (req, res) => {
     res.status(500).send('something went wrong');
   });
 
+  busboy.on('finish', function() {
+    console.log('Done parsing form!');
+    res.end();
+  });
+
   req.pipe(busboy);
 });
 
