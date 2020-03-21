@@ -33,4 +33,6 @@ app.post('/partyfy', upload.single('image'), async (req, res) => {
 
 app.get('/ping', (req, res) => res.status(200).json('pong'));
 
+app.get('/memory', (req, res) => res.status(200).json(process.memoryUsage()));
+
 module.exports = app;
