@@ -10,7 +10,7 @@
   "description": "API for partyfy",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -20,5 +20,6 @@
     "multer": "^1.4.2",
     "nodemon": "^2.0.2",
     "partyfy": "^0.1.6"
-  }
+  },
+  "devDependencies": {}
 }

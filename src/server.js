@@ -21,10 +21,7 @@ app.post('/partyfy', upload.single('image'), async (req, res) => {
   try {
     const partyImage = await partyfy(req.file.buffer);
 
-    res
-      .contentType('gif')
-      .status(200)
-      .send(partyImage);
+    res.contentType('gif').status(200).send(partyImage);
   } catch (err) {
     console.error(err);
     res.status(500).send(err);
