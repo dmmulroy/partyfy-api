@@ -26,6 +26,7 @@ app.post('/partyfy', upload.single('image'), async (req, res) => {
     console.error(err);
     res.status(500).send(err);
   }
+  global.gc(true);
 });
 
 app.get('/ping', (req, res) => res.status(200).json('pong'));
